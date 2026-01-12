@@ -1,0 +1,100 @@
+async function bootstrap() {
+
+  // logger.info("🚀 Fake Feed Service başlatılıyor...");
+
+  // // Robot kullanıcıları oluştur.
+  // try {
+  //   logger.info("🤖 Robot kullanıcı oluşturma başlatıldı...")
+  //   const results = await createRobotUsers()
+  //   logger.info(`✅ İşlem tamamlandı. Eklenen kullanıcı sayısı: ${results.length}`)
+  //   console.table(results)
+  // } catch (err) {
+  //   logger.error("❌ Robot kullanıcı oluşturulurken hata", err)
+  // }
+
+  
+  // try {
+  //   // Deneme için şehir adı
+  //   const cityName = "Rize";
+
+  // // 2) Event payload hazırla
+  //     const eventPayload = await createEventPayload(cityName)
+  //     logger.debug("📝 Event payload hazırlandı: " + JSON.stringify(eventPayload, null, 2))
+  // // 3) API’ye gönder
+  //     await createEvent(eventPayload)
+
+  // // 4) Başvuru payload hazırla
+  //     const applicationPayload = await buildApplicationPayload({
+  //        email: "robot2@avukatevkil.com",          
+  //        cityId: eventPayload.cityId, 
+  //        courtHouseId: eventPayload.courtHouseId 
+  //     })
+      
+  //     logger.info("📝 Application payload hazırlandı: " + JSON.stringify(applicationPayload, null, 2))
+
+  // // 5) API’ye başvuru gönder
+  //     const applicationResult = await applyToEvent(applicationPayload.eventId, applicationPayload)
+  //     logger.info(`✅ Event başvurusu yapıldı.`, applicationResult)
+
+  // } catch (err) {
+  //   logger.error("❌ Event oluşturma hatası", err);
+  // }
+
+
+
+
+ //const rules = loadRules();
+  // const mainInterval = rules.SchedulerRules.mainSchedulerInterval; // dk
+  // const pendingInterval = rules.SchedulerRules.pendingCheckInterval; // dk
+
+  // try {
+  //   // ✅ Token alma
+  //   const token = await getToken();
+  //   logger.info(`🔑 Token başarıyla alındı: ${token.substring(0, 15)}...`);
+
+  //   // ✅ Worker başlat
+  //   await runUserActivityWorker(token);
+
+  // } catch (err) {
+  //   logger.error("❌ Servis başlatılamadı", err);
+  //   process.exit(1);
+  // }
+  
+
+
+  // const plan = generateDailyPlan()
+
+  // console.log("📅 Günlük İlan Planı:")
+  // plan.forEach(p => {
+  //   console.log(`- ${p.city} → ${p.scheduleAt.toLocaleString("tr-TR")}`)
+  // })
+
+// try {
+//     // Deneme için şehir adı
+//     const cityName = "Rize";
+
+//     // Payload hazırla
+//     const payload = await buildEventPayload(cityName);
+//     logger.info("📝 Event payload hazırlandı: " + JSON.stringify(payload, null, 2));
+
+//     // API’ye gönder
+//     const result = await createEvent(payload);
+
+//     logger.info("✅ Event oluşturuldu", result);
+//   } catch (err) {
+//     logger.error("❌ Event oluşturma hatası", err);
+//   }
+
+
+  logger.info(`⏱ Main scheduler: ${mainInterval} dk, Pending check: ${pendingInterval} dk`);
+
+  // İlk çalıştır
+  await runUserActivityWorker();
+  await runPendingActivityWorker();
+
+  // Periyodik çalıştırmalar
+  setInterval(runUserActivityWorker, mainInterval * 60 * 1000);
+  setInterval(runPendingActivityWorker, pendingInterval * 60 * 1000);
+}
+
+bootstrap();

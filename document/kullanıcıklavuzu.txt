@@ -1,0 +1,183 @@
+📖 Kota Yönetimi Kullanım Kılavuzu
+🎯 Amaç
+Bu sistem, şehir bazında ilan sayısını ve dağılımını kontrol etmenizi sağlar.
+📂 Hangi Dosyayı Düzenleyeceğim?
+Dosya: src/config/quota.json Bu dosyayı açın ve aşağıdaki örneklere göre düzenleyin.
+🏙️ Şehir Ayarları
+1. Günlük Sabit İlan (Her Gün Aynı Sayıda)
+"trabzon": {
+  "quota": 2,
+  "type": "daily"
+}
+Sonuç: Her gün 2 ilan oluşturulur. Ne Zaman Kullanılır:
+Küçük şehirler için
+Sabit, tahmin edilebilir ilan sayısı istediğinizde
+2. Haftalık Eşit Dağılım (Her Gün Eşit)
+"ankara": {
+  "quota": 35,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "uniform"
+  }
+}
+Sonuç:
+Haftalık toplam 35 ilan
+Her gün 5 ilan (35 ÷ 7)
+Ne Zaman Kullanılır:
+Orta büyüklükte şehirler
+Dengeli dağılım istediğinizde
+3. Haftalık Rastgele Dağılım (Her Gün Farklı)
+"izmir": {
+  "quota": 35,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "random"
+  }
+}
+Sonuç:
+Haftalık toplam 35 ilan
+Her gün rastgele sayıda (örn: Pazartesi 8, Salı 3, Çarşamba 6...)
+En doğal görünüm - Her hafta farklı pattern
+Ne Zaman Kullanılır:
+Pattern tespitinden kaçınmak için
+En güvenli seçenek
+4. Haftalık Özel Dağılım (Hafta İçi Yoğun, Hafta Sonu Az)
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "weighted",
+    "weights": {
+      "monday": 1.3,
+      "tuesday": 1.2,
+      "wednesday": 1.1,
+      "thursday": 1.1,
+      "friday": 1.0,
+      "saturday": 0.2,
+      "sunday": 0.1
+    }
+  }
+}
+Sonuç:
+Haftalık toplam 70 ilan
+Pazartesi-Perşembe: Yoğun (10-13 ilan/gün)
+Cuma: Normal (10 ilan)
+Cumartesi-Pazar: Az (1-3 ilan/gün)
+Ne Zaman Kullanılır:
+Büyük şehirler
+Gerçekçi iş akışı simülasyonu istediğinizde
+🚫 Yasaklı Barolar (İsteğe Bağlı)
+Dosya: src/config/courthouse-exclusions.json
+{
+  "exclusions": {
+    "istanbul": [
+      "Adalar Adliyesi",
+      "Çatalca Adliyesi"
+    ],
+    "trabzon": [
+      "Akçaabat Adliyesi"
+    ]
+  }
+}
+Nasıl Çalışır:
+İstanbul için ilan oluştururken Adalar ve Çatalca adliyeleri asla seçilmez
+Diğer barolar normal şekilde seçilir
+⚙️ Hızlı Başlangıç Şablonları
+Küçük Şehir (Günlük Sabit)
+"ordu": {
+  "quota": 1,
+  "type": "daily"
+}
+→ Her gün 1 ilan
+Orta Şehir (Haftalık Eşit)
+"bursa": {
+  "quota": 28,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "uniform"
+  }
+}
+→ Her gün 4 ilan (28 ÷ 7)
+Büyük Şehir (Haftalık Rastgele - Önerilen)
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "random"
+  }
+}
+→ Haftada 70 ilan, her gün farklı sayıda
+📋 Pratik Örnekler
+Örnek 1: Müşteri "İstanbul'da günde 10 ilan istiyorum" derse:
+Seçenek A - Günlük Sabit:
+"istanbul": {
+  "quota": 10,
+  "type": "daily"
+}
+Seçenek B - Haftalık Rastgele (Daha Doğal):
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "random"
+  }
+}
+→ Ortalama 10/gün ama her gün farklı (8, 12, 9, 11...)
+Örnek 2: Müşteri "Hafta sonları az ilan olsun" derse:
+"ankara": {
+  "quota": 42,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "weighted",
+    "weights": {
+      "monday": 1.0,
+      "tuesday": 1.0,
+      "wednesday": 1.0,
+      "thursday": 1.0,
+      "friday": 1.0,
+      "saturday": 0.3,
+      "sunday": 0.1
+    }
+  }
+}
+→ Hafta içi normal, Cumartesi-Pazar çok az
+Örnek 3: Müşteri "Adalar Adliyesi'nde ilan olmasın" derse:
+courthouse-exclusions.json dosyasını açın:
+{
+  "exclusions": {
+    "istanbul": [
+      "Adalar Adliyesi"
+    ]
+  }
+}
+⚡ Değişiklikleri Aktif Etme
+quota.json veya courthouse-exclusions.json dosyasını düzenleyin
+Dosyayı kaydedin
+Servisi yeniden başlatın:
+npm start
+Not: Değişiklikler hemen geçerli olmaz, servis restart gerektirir.
+✅ Hangi Seçeneği Öneriyorsunuz?
+Güvenlik & Doğallık için:
+"strategy": "random"
+→ En güvenli, tespit edilmesi en zor
+Gerçekçilik için:
+"strategy": "weighted"
+→ Hafta içi yoğun, hafta sonu az (normal iş akışı)
+Basitlik için:
+"type": "daily"
+→ Her gün aynı sayıda
+🆘 Sık Sorulan Sorular
+S: Haftalık 70 ilan dedim ama tam 70 oluşmadı, neden?
+C: Haftalık kota, o hafta için maksimum sınırdır. Eğer hata oluşursa veya sistem durarsa 70'e ulaşmayabilir. Ama asla 70'i geçmez. S: Pazartesi sabahı ne olur?
+C: Sistem otomatik olarak haftalık kotayı sıfırlar ve yeni haftaya başlar. S: Birden fazla şehri karıştırabilir miyim (biri daily, biri weekly)?
+C: Evet! Her şehir bağımsız çalışır:
+"istanbul": { "quota": 70, "type": "weekly", ... },
+"trabzon": { "quota": 2, "type": "daily" }
+S: Yasaklı baro ekledim ama çalışmıyor?
+C: Baro ismini veritabanındaki tam haliyle yazmalısınız. Büyük/küçük harf fark etmez ama yazım hatası olmamalı.
+📞 Yardım
+Herhangi bir sorunuz olursa veya özel bir senaryo için yardım isterseniz, bu dokümandaki örnekleri göstererek sorunuzu iletebilirsiniz.
+Hazırlayan: Geliştirme Ekibi
+Versiyon: 2.0
+Tarih: 2025-11-20
+Bu dökümanı müşteriye gönderebilirsiniz. Teknik detaylardan arındırılmış, sadece ne yapacağını anlatan pratik bir kılavuz. İsterseniz PDF'e çevirebilir veya ekstra örnekler ekleyebilirim! 

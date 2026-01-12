@@ -1,0 +1,35 @@
+{
+  "_comment": "DEPRECATED - Bu dosya artık kullanılmıyor. Adliye filtrelemesi quota.json üzerinden yapılmaktadır.",
+  "_deprecated": true,
+  "_migration_note": "type: 'weekly' → sadece merkez adliye, type: 'daily' → tüm adliyeler, excludedCourthouses: [...] → hariç tutulacaklar",
+  "_schema_version": "1.0",
+
+  "exclusions": {
+    "istanbul": [
+      "Adalar Adliyesi",
+      "Çatalca Adliyesi"
+    ],
+    "ankara": [],
+    "izmir": [],
+    "trabzon": [
+      "Akçaabat Adliyesi"
+    ],
+    "bursa": [],
+    "antalya": [],
+    "manisa": [],
+    "balıkesir": [],
+    "mersin": [],
+    "adana": [],
+    "şanlıurfa": [],
+    "kocaeli": [],
+    "konya": [],
+    "kayseri": [],
+    "samsun": [],
+    "diyarbakır": [],
+    "hatay": [],
+    "erzurum": [],
+    "ordu": []
+  },
+
+  "globalExclusions": []
+}

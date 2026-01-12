@@ -1,0 +1,251 @@
+3. Distribution (Dağıtım Ayarları)
+"distribution": {
+  "strategy": "weighted",   // Strateji türü
+  "weights": { ... }        // Ağırlıklar (sadece weighted için)
+}
+strategy Parametresi
+Strateji	Açıklama	Sonuç
+"uniform"	Eşit dağılım	Her gün eşit sayıda ilan
+"random"	Rastgele dağılım	Her gün farklı (doğal varyasyon)
+"weighted"	Ağırlıklı dağılım	Belirlediğiniz oranlarda dağıtım
+A. Uniform (Eşit Dağılım)
+"ankara": {
+  "quota": 35,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "uniform"
+  }
+}
+Sonuç:
+Haftalık 35 ilan → 35 ÷ 7 = 5 ilan/gün
+
+Pazartesi: 5 ilan
+Salı:      5 ilan
+Çarşamba:  5 ilan
+Perşembe:  5 ilan
+Cuma:      5 ilan
+Cumartesi: 5 ilan
+Pazar:     5 ilan
+Kalan ilanlar: Eğer tam bölünmezse (örn: 36 ÷ 7), kalan ilanlar ilk günlere eklenir:
+36 ilan → Pazartesi-Salı 6'şar, geri kalan günler 5'er
+B. Random (Rastgele Dağılım)
+"izmir": {
+  "quota": 35,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "random"
+  }
+}
+Sonuç: (Her hafta farklı!)
+Hafta 1:
+Pazartesi: 8 ilan
+Salı:      3 ilan
+Çarşamba:  6 ilan
+Perşembe:  7 ilan
+Cuma:      4 ilan
+Cumartesi: 5 ilan
+Pazar:     2 ilan
+TOPLAM:    35 ilan
+
+Hafta 2:
+Pazartesi: 4 ilan
+Salı:      6 ilan
+Çarşamba:  3 ilan
+...
+Algoritma:
+Her gün için ortalama ± %30 varyans uygulanır
+Son gün (Pazar) kalan tüm ilanı alır
+En doğal görünüm - Pattern detection en zor
+C. Weighted (Ağırlıklı Dağılım)
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "weighted",
+    "weights": {
+      "monday": 1.3,      // Pazartesi %30 daha fazla
+      "tuesday": 1.2,     // Salı %20 daha fazla
+      "wednesday": 1.1,   // Çarşamba %10 daha fazla
+      "thursday": 1.1,    // Perşembe %10 daha fazla
+      "friday": 1.0,      // Cuma normal (baz)
+      "saturday": 0.2,    // Cumartesi %80 daha az
+      "sunday": 0.1       // Pazar %90 daha az
+    }
+  }
+}
+Hesaplama:
+1. Toplam ağırlık = 1.3 + 1.2 + 1.1 + 1.1 + 1.0 + 0.2 + 0.1 = 5.0
+
+2. Her günün oranı:
+   Pazartesi = (70 × 1.3) / 5.0 = 18.2 ≈ 18
+   Salı      = (70 × 1.2) / 5.0 = 16.8 ≈ 17
+   Çarşamba  = (70 × 1.1) / 5.0 = 15.4 ≈ 15
+   Perşembe  = (70 × 1.1) / 5.0 = 15.4 ≈ 15
+   Cuma      = (70 × 1.0) / 5.0 = 14.0 = 14
+   Cumartesi = (70 × 0.2) / 5.0 = 2.8  ≈ 3
+   Pazar     = (70 × 0.1) / 5.0 = 1.4  ≈ 1
+
+3. Toplam = 18+17+15+15+14+3+1 = 83 (❌ 70 olmalı!)
+
+4. Kalan ilanlar round-robin ile ayarlanır
+   Final:
+   Pazartesi: 13
+   Salı:      12
+   Çarşamba:  11
+   Perşembe:  11
+   Cuma:      10
+   Cumartesi: 2
+   Pazar:     1
+   TOPLAM:    70 ✅
+Kullanım Senaryoları:
+Hafta içi yoğun: monday-friday: 1.0-1.3, saturday-sunday: 0.1-0.2
+Hafta sonu yoğun: saturday-sunday: 1.5, monday-friday: 0.8
+Sadece hafta içi: saturday-sunday: 0.0 (0 ilan)
+🚫 4. Yasaklı Barolar (Courthouse Exclusions)
+A. courthouse-exclusions.json Dosyasında
+{
+  "exclusions": {
+    "istanbul": [
+      "Adalar Adliyesi",
+      "Çatalca Adliyesi"
+    ],
+    "trabzon": [
+      "Akçaabat Adliyesi"
+    ],
+    "ankara": []  // Boş array = yasaklı yok
+  },
+  "globalExclusions": [
+    "Test Adliyesi"  // TÜM şehirlerde yasaklı
+  ]
+}
+Nasıl Çalışır:
+Şehir bazlı: Sadece o şehir için geçerli
+Global: Tüm şehirlerde geçerli
+İkisi birleşir: İstanbul için → Adalar + Çatalca + Test hariç
+B. Alternatif: quota.json İçinde (Kullanılmıyor şu anda)
+Gelecekte eklenebilir:
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": { ... },
+  "excludeCourthouses": [   // ⬅️ Buraya eklenebilir (şu an desteklenmiyor)
+    "Adalar Adliyesi"
+  ]
+}
+📊 Tam Örnek Konfigürasyonlar
+Örnek 1: Büyük Şehir - Ağırlıklı Dağılım
+"istanbul": {
+  "quota": 100,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "weighted",
+    "weights": {
+      "monday": 1.5,
+      "tuesday": 1.3,
+      "wednesday": 1.2,
+      "thursday": 1.2,
+      "friday": 1.0,
+      "saturday": 0.3,
+      "sunday": 0.2
+    }
+  }
+}
+Sonuç: Pazartesi-Perşembe yoğun, hafta sonu az
+Örnek 2: Orta Şehir - Eşit Dağılım
+"ankara": {
+  "quota": 49,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "uniform"
+  }
+}
+Sonuç: Her gün 7 ilan (49 ÷ 7)
+Örnek 3: Küçük Şehir - Rastgele Dağılım
+"trabzon": {
+  "quota": 14,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "random"
+  }
+}
+Sonuç: Her hafta farklı pattern (en doğal)
+Örnek 4: Çok Küçük Şehir - Günlük Mod
+"ordu": {
+  "quota": 2,
+  "type": "daily"
+}
+Sonuç: Her gün sabit 2 ilan (eski sistem)
+🔧 Yasaklı Baro Ekleme
+courthouse-exclusions.json
+{
+  "exclusions": {
+    "istanbul": [
+      "Adalar Adliyesi",        // ✅ Mevcut
+      "Çatalca Adliyesi",       // ✅ Mevcut
+      "Şile Adliyesi"           // ⬅️ YENİ EKLEME
+    ],
+    "ankara": [
+      "Polatlı Adliyesi"        // ⬅️ Ankara için yeni ekleme
+    ],
+    "izmir": [
+      "Karaburun Adliyesi",
+      "Foça Adliyesi"
+    ]
+  },
+  "globalExclusions": [
+    "Test Adliyesi",
+    "Demo Adliyesi"             // ⬅️ Tüm şehirlerde yasaklı
+  ]
+}
+Ekleme Adımları:
+src/config/courthouse-exclusions.json dosyasını aç
+"exclusions" objesine şehir ekle/güncelle
+Adliye ismini tam olarak veritabanındaki gibi yaz
+Dosyayı kaydet
+Servisi yeniden başlat (değişiklik hemen geçerli olmaz)
+⚠️ Önemli Notlar
+1. type Parametresi Önceliği
+{
+  "mode": "weekly",      // Global ayar
+  "cities": {
+    "istanbul": {
+      "quota": 70,
+      "type": "weekly"   // Şehir ayarı ÖNCE gelir
+    },
+    "trabzon": {
+      "quota": 2,
+      "type": "daily"    // Bu şehir daily olur
+    }
+  }
+}
+→ İstanbul: weekly, Trabzon: daily (farklı modlar aynı sistemde çalışır!)
+2. Weights Zorunlu Değil
+// Uniform ve Random için weights gerekmez
+"ankara": {
+  "quota": 35,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "uniform"
+    // weights yok ✅
+  }
+}
+
+// Weighted için ZORUNLU
+"istanbul": {
+  "quota": 70,
+  "type": "weekly",
+  "distribution": {
+    "strategy": "weighted",
+    "weights": { ... }  // Olmalı ⚠️
+  }
+}
+3. Adliye İsimleri Büyük/Küçük Harf Duyarlı DEĞİL
+"exclusions": {
+  "istanbul": [
+    "adalar adliyesi",     // ✅ Çalışır
+    "Adalar Adliyesi",     // ✅ Çalışır
+    "ADALAR ADLİYESİ"      // ✅ Çalışır
+  ]
+}
+Kod içinde .toLowerCase() ile normalize edilir.
+Başka sorularınız varsa sormaktan çekinmeyin! 🚀

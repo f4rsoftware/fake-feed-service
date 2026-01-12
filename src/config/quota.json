@@ -1,0 +1,334 @@
+{
+  "_schema_version": "2.0",
+  "_comment": "daily: tüm adliyeler serbest, weekly: sadece merkez adliye",
+
+  "mode": "mixed",
+
+  "cities": {
+    "istanbul": {
+      "quota": 15,
+      "type": "daily"
+    },
+    "ankara": {
+      "quota": 10,
+      "type": "daily"
+    },
+    "izmir": {
+      "quota": 8,
+      "type": "daily"
+    },
+    "bursa": {
+      "quota": 4,
+      "type": "daily"
+    },
+    "antalya": {
+      "quota": 4,
+      "type": "daily"
+    },
+    "kayseri": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "kocaeli": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "konya": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "ordu": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "sakarya": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "samsun": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "tekirdağ": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "trabzon": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "şanlıurfa": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "van": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "kırıkkale": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "batman": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "adana": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "mersin": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "diyarbakır": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "hatay": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "manisa": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "balıkesir": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "erzurum": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "aydın": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "denizli": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "gaziantep": {
+      "quota": 2,
+      "type": "daily"
+    },
+    "malatya": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "muğla": {
+      "quota": 1,
+      "type": "daily"
+    },
+    "aksaray": {
+      "quota": 1,
+      "type": "daily"
+    },
+
+    "adıyaman": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "afyonkarahisar": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "ağrı": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "amasya": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "artvin": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "bilecik": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "bingöl": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "bitlis": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "bolu": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "burdur": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "çanakkale": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "çankırı": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "çorum": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "edirne": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "elazığ": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "erzincan": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "eskişehir": {
+      "quota": 5,
+      "type": "weekly"
+    },
+    "giresun": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "gümüşhane": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "hakkari": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "ısparta": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "kars": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "kastamonu": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "kırklareli": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "kırşehir": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "kütahya": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "kahramanmaraş": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "mardin": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "muş": {
+      "quota": 4,
+      "type": "weekly"
+    },
+    "nevşehir": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "niğde": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "rize": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "siirt": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "sinop": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "sivas": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "tokat": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "tunceli": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "uşak": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "yozgat": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "zonguldak": {
+      "quota": 2,
+      "type": "weekly"
+    },
+    "bayburt": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "karaman": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "şırnak": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "bartın": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "ardahan": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "ığdır": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "yalova": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "karabük": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "kilis": {
+      "quota": 1,
+      "type": "weekly"
+    },
+    "osmaniye": {
+      "quota": 3,
+      "type": "weekly"
+    },
+    "düzce": {
+      "quota": 1,
+      "type": "weekly"
+    }
+  }
+}

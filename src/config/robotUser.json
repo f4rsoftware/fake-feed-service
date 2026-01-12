@@ -1,0 +1,28 @@
+[
+  {
+    "email": "robot1@avukatevkil.com",
+    "passwordHash": "$2a$10$qrre/YA4hFoOOTJ0x3/QfOZ/aSgpe7JMPMfKItK5awrqQ4Dla50Ni",
+    "firstName": "BURAK",
+    "lastName": "MAT",
+    "phoneNumber": "5061111111",
+    "barNumber": "525253",
+    "identificationNumber": "12521478521",
+    "birthDate": "1984-02-07",
+    "cityPlateCode": "34",
+    "referralCode": "RoBoT1",
+    "subscriptionTier": "PREMIUM"
+  },
+  {
+    "email": "robot2@avukatevkil.com",
+    "passwordHash": "$2a$10$qrre/YA4hFoOOTJ0x3/QfOZ/aSgpe7JMPMfKItK5awrqQ4Dla50Ni",
+    "firstName": "AYŞE",
+    "lastName": "YILMAZ",
+    "phoneNumber": "5062222222",
+    "barNumber": "999999",
+    "identificationNumber": "98765432100",
+    "birthDate": "1990-01-01",
+    "cityPlateCode": "35",
+    "referralCode": "RoBoT2",
+    "subscriptionTier": "PREMIUM"
+  }
+]

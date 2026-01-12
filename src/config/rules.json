@@ -1,0 +1,126 @@
+{
+  "_comment": "Fake activity generator için kurallar seti",
+
+  "ActivityTimingRules": {
+    "_comment": "Aktiviteler arası gecikme süreleri (dakika cinsinden)",
+    "REGISTERED_TO_CONFIRMED": {
+      "minDelayMinutes": 1,
+      "maxDelayMinutes": 2
+    }
+  },
+
+  "NameManagementRules": {
+    "_comment": "Fake kullanıcı isim/soyisim oluşturma kuralları",
+    "minFirstNameLength": 3,
+    "maxFirstNameLength": 15,
+    "minSurnameLength": 3,
+    "maxSurnameLength": 12,
+    "avoidDuplicateNames": true,
+    "duplicateCheckPeriod": 30,
+    "maxNameGenerationAttempts": 50
+  },
+  
+  "ActivityFlowRules": {
+    "_comment": "Aktivite akışı ve olasılık kuralları",
+    "maxConcurrentUsers": 100,
+    "activityCompletionProbability": {
+      "REGISTRATION_CONFIRMED": 0.9
+    }
+  },
+
+  "RandomizationRules": {
+    "_comment": "Aktivite üretiminde rastgelelik ve zamanlama varyansları",
+    "newUserRegistrationProbability": 0.7,
+    "_comment_newUserRegistrationProbability": "Her çalışmada yeni kullanıcı oluşturma olasılığı (0.0-1.0)",
+
+    "activityIntervals": {
+      "_comment": "Saat dilimine göre aktivite aralıkları (dakika)",
+      "peakHours": { "min": 15, "max": 35 },
+      "lunchBreak": { "min": 30, "max": 50 },
+      "evening": { "min": 45, "max": 75 },
+      "night": { "min": 90, "max": 180 },
+      "weekend": { "min": 60, "max": 120 }
+    },
+
+    "timeSlots": {
+      "_comment": "Saat dilimi tanımları",
+      "peakMorning": { "start": 9, "end": 12 },
+      "lunchBreak": { "start": 12, "end": 14 },
+      "peakAfternoon": { "start": 14, "end": 17 },
+      "evening": { "start": 17, "end": 21 },
+      "night": { "start": 21, "end": 9 }
+    },
+
+    "burstProbability": 0.15,
+    "_comment_burstProbability": "Art arda 2-3 aktivite olma olasılığı (daha canlı görünüm)",
+
+    "quietPeriodProbability": 0.1,
+    "_comment_quietPeriodProbability": "Uzun sessizlik dönemi olasılığı (doğal görünüm)",
+
+    "weekendReduction": 0.4,
+    "_comment_weekendReduction": "Hafta sonu aktivite olasılığı çarpanı (0.4 = %40 aktivite)"
+  },
+
+  "CacheManagementRules": {
+    "_comment": "Redis üzerinde saklanan aktiviteler için cache yönetimi",
+    "maxRecentActivitiesCount": 100,
+    "maxPendingActivitiesCount": 50,
+    "cacheCleanupInterval": 24,
+    "pendingActivityTimeout": 1440,
+    "recentActivityRetention": 168
+  },
+  "TaskRules": {
+    "workingHours": { "start": 9, "end": 17 },
+    "_comment_workingHours": "Görev saati için izin verilen aralık. Örn: 09-17 → görevler sadece mesai saatlerinde başlar.",
+
+    "dateRangeDays": { "min": 1, "max": 5 },
+    "_comment_dateRangeDays": "Görev tarihi için minimum/maximum gün aralığı. Min=1 (yarın), Max=5 (5 gün sonrası).",
+
+    "excludeWeekends": true,
+    "_comment_excludeWeekends": "Hafta sonu (Cumartesi/Pazar) günlerine görev atanmasın mı? true=atanmaz, false=atanabilir.",
+
+    "excludeHolidays": true,
+    "_comment_excludeHolidays": "Resmî tatil günlerine görev atanmasın mı? true=atanmaz, false=atanabilir. Tatiller holidays.json’dan okunur."
+  },
+    "SchedulerRules": {
+    "_comment": "Worker ve scheduler zamanlama kuralları",
+
+    "mainSchedulerInterval": 1,
+    "_comment_mainSchedulerInterval": "Ana scheduler kaç dakikada bir çalışsın (dakika cinsinden).",
+
+    "pendingCheckInterval": 1,
+    "_comment_pendingCheckInterval": "Bekleyen ilan işleri kaç dakikada bir kontrol edilsin.",
+
+    "cacheCleanupSchedule": "0 2 * * *",
+    "_comment_cacheCleanupSchedule": "Her gün saat 02:00’de cache temizliği yapılır (cron ifadesi).",
+
+    "quotaResetSchedule": "0 0 * * *",
+    "_comment_quotaResetSchedule": "Her gün gece 00:00’da quota resetlenir (cron ifadesi).",
+
+    "weekendScheduleEnabled": true,
+    "_comment_weekendScheduleEnabled": "Hafta sonu (Cumartesi/Pazar) ilan açılsın mı?",
+
+    "activeHours": { "start": 9, "end": 17 },
+    "_comment_activeHours": "Yoğun ilan saat aralığı (tüm şehirler için geçerli).",
+
+    "peakHoursWeight": 1,
+    "_comment_peakHoursWeight": "İlanların yüzde kaçı aktif saatler (09:00–17:00) arasında dağıtılacak. Kalan yüzde günün geri kalanına yayılır.",
+	
+	"minGapRange": { "min": 20, "max": 30 },
+    "_comment_minGapRange": "İki ilan arasındaki minimum zaman aralığı (dakika cinsinden).",
+
+    "maxJobDelayToleranceMinutes": 30,
+    "_comment_maxJobDelayToleranceMinutes": "Sistem kapalıyken biriken joblar için maksimum tolerans (dakika). Bu süreden fazla geçmiş joblar atlanır."
+  },
+  
+  "TestDebugRules": {
+    "_comment": "Test/debug moduna özel kurallar",
+    "enableTestMode": false,
+    "testModeAcceleration": 10,
+    "debugLogging": true,
+    "mockExternalServices": false,
+    "seedInitialData": true,
+    "enableManualTriggers": true,
+    "maxTestActivities": 1000
+  }
+}
