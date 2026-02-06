@@ -11,7 +11,8 @@
     },
     "ankara": {
       "quota": 10,
-      "type": "daily"
+      "type": "daily",
+      "excludedCourthouses": ["Yargıtay"]
     },
     "izmir": {
       "quota": 8,

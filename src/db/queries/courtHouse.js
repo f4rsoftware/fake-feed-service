@@ -68,6 +68,8 @@ export async function getCourtHousesByCityName(cityName, cityConfig = {}) {
     FROM public.city c
     JOIN public.court_house ch ON ch.city_id = c.id
     WHERE c.name ILIKE $1
+      AND ch.name NOT ILIKE '%Yargıtay%'
+      AND ch.name NOT ILIKE '%BAM %'
   `;
 
   const params = [cityName];
